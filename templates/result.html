@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Conversion Result{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Conversion Successful!</h1>
+        <div class="text-center">
+            <p>Original: {{ original }}</p>
+            <p>Converted to: {{ format|upper }}</p>
+            <img src="{{ url_for('converted_file', filename=converted) }}" alt="Converted Image" class="img-fluid mb-3" style="max-width: 500px;">
+            <br>
+            <a href="{{ url_for('download', filename=converted) }}" class="btn btn-success">Download</a>
+            <a href="/" class="btn btn-primary">Convert Another</a>
+            <a href="/history" class="btn btn-secondary">View History</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Image Converter{% endblock %}
+
+{% block content %}
+    <div id="animated-bg">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Image Converter</h1>
+        <form action="/convert" method="post" enctype="multipart/form-data" class="border p-4 rounded">
+            <div class="mb-3">
+                <label for="file" class="form-label">Select Image</label>
+                <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+                <label for="format" class="form-label">Convert to Format</label>
+                <select class="form-select" id="format" name="format">
+                    <option value="jpg">JPG</option>
+                    <option value="png">PNG</option>
+                    <option value="bmp">BMP</option>
+                    <option value="tiff">TIFF</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="width" class="form-label">Width (optional)</label>
+                    <input type="number" class="form-control" id="width" name="width" placeholder="e.g., 800">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="height" class="form-label">Height (optional)</label>
+                    <input type="number" class="form-control" id="height" name="height" placeholder="e.g., 600">
+                </div>
+            </div>
+            <div class="mb-3" id="quality-group">
+                <label for="quality" class="form-label">Quality (for JPG)</label>
+                <input type="range" class="form-range" id="quality" name="quality" min="1" max="100" value="85">
+                <span id="quality-value">85</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/history" class="btn btn-secondary">View History</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const formatSelect = document.getElementById('format');
+        const qualityGroup = document.getElementById('quality-group');
+        const qualityInput = document.getElementById('quality');
+        const qualityValue = document.getElementById('quality-value');
+
+        formatSelect.addEventListener('change', function() {
+            if (this.value === 'jpg') {
+                qualityGroup.style.display = 'block';
+            } else {
+                qualityGroup.style.display = 'none';
+            }
+        });
+
+        qualityInput.addEventListener('input', function() {
+            qualityValue.textContent = this.value;
+        });
+    </script>
+{% endblock %}

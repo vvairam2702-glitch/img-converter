@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Conversion History{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Conversion History</h1>
+        {% if conversions %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Original File</th>
+                    <th>Original Format</th>
+                    <th>New Format</th>
+                    <th>Size</th>
+                    <th>Timestamp</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conv in conversions %}
+                <tr>
+                    <td>{{ conv.original_filename }}</td>
+                    <td>{{ conv.original_format|upper }}</td>
+                    <td>{{ conv.new_format|upper }}</td>
+                    <td>
+                        {% if conv.width and conv.height %}
+                        {{ conv.width }}x{{ conv.height }}
+                        {% else %}
+                        Original
+                        {% endif %}
+                    </td>
+                    <td>{{ conv.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td><a href="{{ url_for('download', filename=conv.new_filename) }}" class="btn btn-sm btn-success">Download</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">No conversions yet.</p>
+        {% endif %}
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-primary">Convert New Image</a>
+        </div>
+    </div>
+{% endblock %}
